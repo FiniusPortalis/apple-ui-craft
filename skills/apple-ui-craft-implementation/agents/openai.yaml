@@ -1,0 +1,6 @@
+interface:
+  display_name: "Apple UI Craft Implementation"
+  short_description: "Implement and validate native Apple UI changes"
+  default_prompt: "Use $apple-ui-craft-implementation to implement and validate this authorized native UI change or completed review handoff, including continuation within the same user task under separate roles or stages; preserve explicit user gates and route any requested final formal verdict to an independent reviewer."
+policy:
+  allow_implicit_invocation: true

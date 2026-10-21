@@ -1,0 +1,6 @@
+interface:
+  display_name: "Apple UI Craft Review"
+  short_description: "Review native Apple UI with evidence-backed findings"
+  default_prompt: "Use $apple-ui-craft-review to audit this native UI read-only with current Apple HIG sources and integrity evidence; if fixes are also authorized, the coordinator continues via a separate implementation agent or stage under the role-boundary contract, preserving explicit user gates and independent final review when requested."
+policy:
+  allow_implicit_invocation: true

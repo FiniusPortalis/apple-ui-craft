@@ -1,0 +1,6 @@
+interface:
+  display_name: "Apple UI Craft Design"
+  short_description: "Design implementation-ready native Apple interfaces"
+  default_prompt: "Use $apple-ui-craft-design to design an implementation-ready native UI specification for iOS, iPadOS, and macOS using current Apple HIG sources. Return a readiness verdict, platform matrix, native component mapping, deterministic canonical-field and query/filter contracts, cross-artifact consistency, complete states, accessibility/input behavior, exceptions, and testable acceptance criteria. Do not edit code."
+policy:
+  allow_implicit_invocation: true
