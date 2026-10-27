@@ -10,7 +10,13 @@ license: MIT
 
 Accessibility-specific work is excluded by default. Include only what the user explicitly requests; a general HIG/UI request does not enable it. Preserve existing accessibility and native behavior, but do not add dedicated implementation, checks, findings, or readiness gates while excluded. Read [accessibility-scope.md](references/accessibility-scope.md) when that boundary needs clarification or accessibility is requested.
 
-Default to a concise, self-contained response covering the result or proposal, essential reasons, and relevant checks or next steps. Use detailed templates only for a requested detailed specification, audit, plan, or handoff. Include material behavior and limits without reproducing every matrix, empty section, or repeated source ledger.
+For a bounded change to a view, control, or short flow, use a few short paragraphs, or one compact table plus one or two short supporting paragraphs. This is a default shape, not a hard limit. When states and actions need comparison, put the visible content and available actions together in the same table; do not create a second state-by-state explanation. Keep supporting Apple links beside the decisions they support without restating the guidance in a separate source paragraph.
+
+Include the requested decisions, their essential rationale, and only assumptions or checks that could change them. Leave routine styling and unchanged app-wide behavior to the existing/native conventions. Do not add adjacent commands, alternative workflows, or backend algorithms just to make a local UI proposal more comprehensive. Avoid a generic implementation checklist or a design-only disclaimer about not having run the app; disclose a concrete evidence limit when it affects the proposal.
+
+Treat the workflow as design checks, not mandatory response sections. Omit readiness labels, rule IDs, claim-class labels, component inventories, and separate source/validation ledgers unless a detailed specification, explicit readiness assessment, or formal handoff is requested. Explain a real blocker directly even in a short reply. Reuse surrounding behavior without re-documenting it; do not add adjacent product features merely to fill a platform checklist.
+
+Expand only for the requested complexity or detail. Do not remove material behavior, evidence, or recovery consequences to meet an arbitrary length limit.
 
 ## One job
 
@@ -70,7 +76,7 @@ If a missing fact changes architecture materially, present the safest default an
 
 ### 2. Frame the primary outcome
 
-Write one sentence in this form:
+Identify the primary outcome during analysis. Include it in the response only when it clarifies the proposal, for example:
 
 ```text
 When <context>, a person can <primary outcome> without <main avoidable cost or risk>.
@@ -104,7 +110,7 @@ Do not force one layout across all three platforms. Keep terminology and command
 
 ### 4. Map every surface to native components
 
-Create a component map containing:
+Identify the relevant native components and their responsibilities. Use a separate component map only for a detailed specification or when it makes a comparison clearer. Consider:
 
 - purpose and scope
 - preferred native SwiftUI/UIKit/AppKit component or pattern
@@ -177,7 +183,7 @@ Do not import web animation curves or duration tables as Apple-native rules. Rep
 
 Evaluate the design against the non-negotiable gates in `references/design-playbook.md`.
 
-Use one readiness verdict:
+For a requested detailed specification or explicit readiness assessment, report one readiness verdict. For a bounded design proposal, apply these criteria internally and describe any material blocker or assumption directly without adding a verdict label:
 
 - `NOT READY` — a material in-scope product, safety, recovery, platform, or feasibility gap prevents responsible implementation.
 - `READY WITH RISKS` — implementable, but named assumptions or validation risks remain.
@@ -187,7 +193,7 @@ Approval is earned. Do not use `READY` while a critical path, destructive conseq
 
 ### 10. Make the handoff self-contained
 
-Keep the handoff self-contained: describe the requested behavior, relevant platform/component choices, states, ordinary input, boundaries, and testable completion criteria with their material sources. Concise prose is sufficient; use matrices or a separate source ledger only when requested or needed to make a comparison clear.
+Make the requested deliverable self-contained at its actual scope. Describe the behavior an implementer would otherwise have to invent, cite the material source, and identify consequential assumptions or completion checks. Do not turn a local design answer into a full handoff or repeat a state table in prose. Use a formal handoff only when requested or needed for an authorized continuation.
 
 ## Hard rules
 
@@ -207,7 +213,7 @@ Keep the handoff self-contained: describe the requested behavior, relevant platf
 
 ## Required output
 
-Use `references/design-spec-template.md` only when a detailed specification is requested. For a bounded concept or local design decision, include applicable behavior, assumptions, material Apple sources, ordinary input behavior, risks, and acceptance criteria in concise prose. Include accessibility implications only when requested. Omit unrelated sections; do not leave material behavior or readiness limitations implicit.
+For a bounded design request, follow the compact response contract above: concrete proposal, changed behavior, essential rationale and source links, and only consequential assumptions or checks. Do not reproduce the workflow or append a readiness verdict unless readiness was explicitly requested. Use `references/design-spec-template.md` only for a requested detailed specification; include accessibility only when requested.
 
 For a full specification, include the applicable items in this order:
 

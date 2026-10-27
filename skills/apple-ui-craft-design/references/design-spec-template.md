@@ -2,7 +2,7 @@
 
 Use detailed sections only at the requested depth. Follow [accessibility-scope.md](accessibility-scope.md): omit accessibility-only sections, rows, and columns by default; retain ordinary input, layout, and validation details that affect the task. In a formal report, identify the selected scope once rather than listing excluded features as `NOT RUN`.
 
-Use this template when a detailed implementation-ready specification is requested. For a bounded concept or local design decision, include applicable behavior, assumptions, material Apple sources, ordinary input, risks, and acceptance criteria in concise prose; include accessibility only when requested. Omit unrelated sections; do not leave material behavior or readiness limitations implicit.
+Use this template only when a detailed implementation-ready specification is requested. For a bounded concept or local design decision, follow the compact response contract in SKILL.md instead of instantiating these sections. Preserve material behavior, source support, and consequential assumptions or checks; include accessibility only when requested.
 
 Use this structure. Remove sections that are truly inapplicable; do not leave unresolved behavior implicit.
 

@@ -26,6 +26,8 @@ A design cannot receive `READY` when any applicable gate fails.
 
 ## Readiness rules
 
+Apply these criteria during assessment. Print a readiness label only for a requested detailed specification or explicit readiness assessment; a narrow proposal states any material blocker or assumption directly. The gates do not require a full report or extra product features.
+
 ### NOT READY
 
 Use when any of these is unresolved and material:

@@ -1,6 +1,6 @@
 # Detailed review workflow
 
-Read for a standard/deep audit or a formal implementation handoff. For a narrow quick review, the entrypoint and selected rubric sections suffice. Script examples reuse the absolute paths initialized in [SKILL.md](../SKILL.md).
+Read for a complex audit or a formal implementation handoff. For a narrow review at any depth, the entrypoint and selected rubric sections suffice. The steps below are assessment checks; the entrypoint response contract controls what is printed. Script examples reuse the absolute paths initialized in [SKILL.md](../SKILL.md).
 
 ## Establish scope and evidence
 
@@ -94,17 +94,9 @@ Every result is a candidate. Confirm context, exception, and user impact before 
 
 ### 5. Vet and classify findings
 
-For every finding:
+For every finding, confirm the exact location, current behavior, user impact, target behavior, source basis, relevant exceptions, and a reproducible done criterion. Assess severity and confidence before prioritizing it.
 
-- cite `file:line`, visible region, or exact runtime step
-- show current behavior/code in `Before`
-- specify the exact target behavior/code in `After`
-- explain user impact in `Why`
-- assign severity and confidence
-- name the directly applicable rule ID and claim class; if none fits, state `no matching catalog rule` and use the exact API/product-contract basis
-- link the most specific official Apple source
-- state the exception checked
-- give a reproducible verification or done criterion
+Present the problem, consequence, and correction together with the location and material source link. In a narrow review, omit routine rule/class/confidence labels and negative exception checks; show them only when they affect the decision or a detailed report requires them. Shared verification can be stated once. Do not invent a catalog match for a defect established directly by code or a product contract.
 
 When the correct fix depends on runtime evidence, report `Investigation` rather than inventing a solution.
 
@@ -134,7 +126,7 @@ Do not silently accept a change because it appears to fix a finding. That change
 
 ### 8. Determine the verdict
 
-Only when review integrity is `PASS`, use exactly one verdict from `verdict-policy.md`:
+For an explicit formal verdict, detailed audit report, or required coordinator handoff, use exactly one verdict from `verdict-policy.md` only when review integrity is `PASS`. Ordinary narrow reviews state their conclusion in plain language:
 
 - `BLOCK`
 - `CHANGES REQUIRED`
@@ -147,7 +139,7 @@ Add an evidence qualifier when material, such as `visual-only`, `code-only`, or 
 
 The review never edits source or writes implementation plans. When mutation was requested, return findings and a self-contained handoff to the coordinator so the implementation role can act without rediscovering intent. For review-only requests, recommendations are not authorization to implement.
 
-Specify:
+For authorized review-and-fix continuation, provide the applicable handoff information below to the coordinator. Do not print this checklist for review-only requests or repeat it in the final summary.
 
 - recommended execution order
 - dependencies and shared root causes

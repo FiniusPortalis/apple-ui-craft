@@ -2,7 +2,7 @@
 
 Use detailed sections only at the requested depth. Follow [accessibility-scope.md](accessibility-scope.md): omit accessibility-only sections, rows, and columns by default; retain ordinary input, layout, and validation details that affect the task. In a formal report, identify the selected scope once rather than listing excluded features as `NOT RUN`.
 
-Preserve the integrity result and scope, reviewer identity, evidence-qualified verdict, actionable Before/After/Why findings, sources, validation limits, and required role-boundary handoff. Use the full template for a detailed audit or formal handoff; for a narrow review, combine these facts into a concise report and omit empty tables or repeated sections.
+For a narrow review, use the compact response contract in SKILL.md: conclusion, located findings with impact and correction, supporting sources, and material verification limits. Keep assessment metadata out of the reply unless it changes the decision. For a requested detailed audit, formal verdict, or coordinator handoff, include the applicable integrity, baseline, reviewer, verdict, and continuation metadata. Integrity failures must always be reported.
 
 For a detailed report, keep findings in one Before/After/Why table. For a narrow review, concise prose may preserve the same actionable facts; omit an empty table when no findings remain.
 

@@ -1,6 +1,8 @@
 # Verdict policy
 
-Use one HIG verdict only when `Review integrity` is `PASS`. Add an evidence qualifier in parentheses when necessary. Every verdict applies only to the identified reviewed input. All verdicts, including `APPROVE WITH NOTES`, require a reviewer who did not implement the change.
+Use these formal labels for an explicit approval/readiness request, detailed audit report, or required coordinator handoff. An ordinary narrow review may state its conclusion in plain language; the same severity and evidence standards still apply, and it must not imply formal approval.
+
+Issue a formal HIG verdict only when `Review integrity` is `PASS`. Add an evidence qualifier in parentheses when necessary. Every verdict applies only to the identified reviewed input. All verdicts, including `APPROVE WITH NOTES`, require a reviewer who did not implement the change.
 
 If review integrity is `INVALIDATED`, do not issue a HIG verdict. `INVALIDATED` is an operational state, not a fifth verdict.
 

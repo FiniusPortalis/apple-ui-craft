@@ -6,7 +6,7 @@ Separate **responsibilities and evidence**, not necessarily user-visible tasks. 
 
 | User intent | Execution path | Source mutation | Completion report |
 | --- | --- | --- | --- |
-| Review, audit, findings, release readiness, or approval only | `apple-ui-craft-review` assignment | Forbidden; only an explicitly allowlisted report artifact may be written | Findings and evidence-qualified verdict when integrity/evidence requirements pass; no implementation |
+| Review, audit, findings, release readiness, or approval only | `apple-ui-craft-review` assignment | Forbidden; only an explicitly allowlisted report artifact may be written | Findings with material evidence limits; a formal verdict only when requested and integrity/evidence requirements pass; no implementation |
 | Fix, implement, apply, patch, or refactor only | `apple-ui-craft-implementation` assignment | Only within authorized scope | Changes and implementation validation; no self-approval |
 | Review and fix | Coordinator → read-only reviewer → implementation agent or coordinator's separate implementation stage → validation | Reviewer never edits; implementation starts after review closes | Coordinator reports findings addressed, actual changes, checks, and remaining work; a handoff alone is incomplete |
 | Review and fix with a final formal verdict | Same path, then independent read-only post-change reviewer | No writes during either review assignment | Implementation status and independent verdict reported separately; missing formal review remains pending |
@@ -54,7 +54,7 @@ An implementation-to-review handoff must include:
 - diff-scope confirmation
 - explicit statement that the implementer issued no approval verdict
 
-The coordinator's final response distinguishes initial findings, implementation and validation, any independent post-change verdict with attribution, and unfinished work. Preserve the original review as evidence about its original input; it does not approve later edits.
+The handoff fields above are coordination information, not a checklist to repeat in a narrow user-facing reply. The coordinator's final response concisely distinguishes initial findings, implementation and validation, any requested independent post-change verdict with attribution, and material unfinished work. Preserve the original review as evidence about its original input; it does not approve later edits.
 
 ## Assurance levels
 
