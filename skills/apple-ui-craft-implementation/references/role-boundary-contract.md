@@ -49,7 +49,7 @@ An implementation-to-review handoff must include:
 - implementation owner/stage, mode, and plan path, if any
 - changed files and user-visible behavior
 - exact commands/tests and results
-- runtime and accessibility contexts actually checked
+- runtime contexts actually checked, including accessibility only when requested
 - remaining checks, known limitations, and plan drift
 - diff-scope confirmation
 - explicit statement that the implementer issued no approval verdict

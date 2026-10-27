@@ -1,5 +1,7 @@
 # Platform profiles
 
+Apply [accessibility-scope.md](accessibility-scope.md) before selecting criteria. Accessibility-only requirements, examples, settings, and checks below apply only to explicitly requested accessibility work; ordinary UI/input requirements remain in the requested task scope.
+
 Use this file with `native-rule-catalog.md`. It describes default platform posture, not an excuse to make the three platforms artificially different.
 
 ## iOS
@@ -18,9 +20,9 @@ Use this file with `native-rule-catalog.md`. It describes default platform postu
 - smallest supported iPhone width
 - a large iPhone
 - portrait and landscape where the product supports both
-- default text and at least one accessibility text size
+- default text and long/localized content; accessibility text sizes only when requested
 - light and dark appearances
-- VoiceOver, Reduce Motion, Increase Contrast, Reduce Transparency as relevant
+- VoiceOver, Reduce Motion, Increase Contrast, Reduce Transparency only when explicitly requested
 - interrupted flows: backgrounding, cancellation, denied permission, failed network operation
 
 ### Common structural failures
@@ -28,7 +30,7 @@ Use this file with `native-rule-catalog.md`. It describes default platform postu
 - desktop-like persistent panes squeezed into compact width
 - custom back controls that break interactive dismissal
 - critical actions available only through swipe or long press
-- fixed-height text regions that clip Dynamic Type
+- fixed-height text regions that clip ordinary/localized text; Dynamic Type checks only when requested
 - repeated full-screen transitions for small related tasks
 
 ## iPadOS
@@ -51,7 +53,7 @@ Use this file with `native-rule-catalog.md`. It describes default platform postu
 - touch-only and hardware keyboard/pointer
 - virtual keyboard visible and hidden
 - Stage Manager or equivalent free resizing when supported by the OS
-- default and accessibility text sizes
+- default text; accessibility text sizes only when requested
 
 ### Common structural failures
 
@@ -77,10 +79,10 @@ Use this file with `native-rule-catalog.md`. It describes default platform postu
 - minimum supported window size
 - typical working size
 - large/full-screen window
-- keyboard-only navigation and Full Keyboard Access
+- ordinary keyboard navigation; Full Keyboard Access only when that feature is requested
 - pointer, contextual menus, and drag-and-drop where relevant
 - menu bar command availability and standard shortcuts
-- light/dark, increased contrast, reduced transparency, reduced motion
+- light/dark; increased contrast, reduced transparency, reduced motion only when requested
 - multiple windows/scenes when supported
 
 ### Common structural failures
@@ -101,7 +103,7 @@ Keep these stable when the product is shared across platforms:
 - command semantics
 - destructive-action consequences
 - search scope and filter meaning
-- accessibility labels and result announcements
+- accessibility labels and result announcements only when requested
 - user-visible persistence and synchronization rules
 
 Adapt these intentionally rather than forcing parity:

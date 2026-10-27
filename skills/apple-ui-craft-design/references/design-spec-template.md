@@ -1,6 +1,8 @@
 # Implementation-ready design specification template
 
-Use this template for an implementation-ready specification. For a bounded concept or local design decision, include applicable behavior, assumptions, material Apple sources, accessibility/input implications, risks, and acceptance criteria in concise prose. Omit unrelated sections; do not leave material behavior or readiness limitations implicit.
+Use detailed sections only at the requested depth. Follow [accessibility-scope.md](accessibility-scope.md): omit accessibility-only sections, rows, and columns by default; retain ordinary input, layout, and validation details that affect the task. In a formal report, identify the selected scope once rather than listing excluded features as `NOT RUN`.
+
+Use this template when a detailed implementation-ready specification is requested. For a bounded concept or local design decision, include applicable behavior, assumptions, material Apple sources, ordinary input, risks, and acceptance criteria in concise prose; include accessibility only when requested. Omit unrelated sections; do not leave material behavior or readiness limitations implicit.
 
 Use this structure. Remove sections that are truly inapplicable; do not leave unresolved behavior implicit.
 
@@ -123,7 +125,7 @@ Use `PASS`, `CONTRADICTION`, or `NOT APPLICABLE`. Any unexplained material `CONT
 | macOS typical window | | | | | |
 | macOS large/full screen | | | | | |
 
-## 12. Accessibility and input matrix
+## 12. Input behavior and optional accessibility
 
 | Concern | Required behavior | iOS | iPadOS | macOS | Verification |
 | --- | --- | --- | --- | --- | --- |

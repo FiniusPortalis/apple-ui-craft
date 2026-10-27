@@ -13,11 +13,11 @@ import json
 import os
 import re
 import sys
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from typing import Iterable, Sequence
 
-VERSION = "2.0.0"
+VERSION = "2.1.0"
 DEFAULT_EXCLUDES = {
     ".build",
     ".git",
@@ -312,7 +312,7 @@ RULES: tuple[Rule, ...] = (
         "investigation",
         ("ios", "ipados", "macos"),
         r"\.(?:ultraThinMaterial|thinMaterial|regularMaterial|thickMaterial)\b",
-        "Materials should be selected for semantic structure and tested across settings/backgrounds.",
+        "Materials should be selected for semantic structure and checked for legibility on relevant content backgrounds.",
         "Is this content-layer separation with sufficient contrast rather than appearance-only styling?",
         "https://developer.apple.com/design/human-interface-guidelines/materials",
     ),
@@ -322,7 +322,7 @@ RULES: tuple[Rule, ...] = (
         "Custom SwiftUI animation needs purpose and Reduce Motion review",
         "investigation",
         ("ios", "ipados", "macos"),
-        r"(?:\.animation\s*\(|withAnimation\s*\()",
+        r"(?:\.animation\s*\(|withAnimation\s*(?:\(|\{))",
         "Custom motion should have a purpose, preserve control, and provide a reduced-motion path where spatial/depth motion is involved.",
         "Is the motion nonspatial or gesture-tracked, and is accessibilityReduceMotion handled elsewhere?",
         "https://developer.apple.com/design/human-interface-guidelines/accessibility",
@@ -356,7 +356,7 @@ RULES: tuple[Rule, ...] = (
         "major",
         ("macos",),
         r"(?:NSWindow\s*\.\s*StyleMask[^\n]*\.borderless|styleMask[^\n]*\.borderless)",
-        "Borderless windows can remove expected movement, resizing, focus, controls, and accessibility.",
+        "Borderless windows can remove expected movement, resizing, ordinary focus, and standard window controls.",
         "Is this an intentional utility panel/HUD with explicit window and escape behavior?",
         "https://developer.apple.com/design/human-interface-guidelines/windows",
     ),
@@ -368,10 +368,78 @@ RULES: tuple[Rule, ...] = (
         ("macos",),
         r"\.windowStyle\s*\(\s*\.hiddenTitleBar\s*\)",
         "Title-bar customization should preserve standard window behavior and command access.",
-        "Does the window remain movable, resizable, closable, accessible, and platform-consistent?",
+        "Does the window remain movable, resizable, closable, and usable through ordinary window commands?",
         "https://developer.apple.com/design/human-interface-guidelines/windows",
     ),
 )
+
+
+ACCESSIBILITY_RULE_GROUPS = {
+    "A11Y-01": "voiceover", "A11Y-08": "voiceover",
+    "A11Y-02": "vision", "A11Y-03": "input", "A11Y-05": "input",
+    "A11Y-04": "motion", "A11Y-06": "text", "A11Y-07": "input",
+}
+
+# Keep the ordinary UI part of mixed rules without requesting assistive work.
+UI_SCOPE_OVERRIDES = {
+    "control.swiftui-on-tap": {
+        "message": "Button-like actions usually gain pressed state, keyboard activation, and standard behavior from a native control.",
+        "exception_to_check": "Is this direct manipulation of content, and is an equivalent discoverable command available?",
+    },
+    "type.swiftui-fixed-size": {
+        "message": "Check whether custom type is legible and fits ordinary content and localization.",
+        "exception_to_check": "Is this intentional typography that remains legible in the supported layout?",
+        "source": "https://developer.apple.com/design/human-interface-guidelines/typography",
+    },
+    "type.uikit-fixed-size": {
+        "message": "Check whether fixed UIKit type is legible and fits ordinary content and localization.",
+        "exception_to_check": "Does the chosen size suit this control and its supported layout?",
+    },
+    "type.appkit-fixed-size": {
+        "message": "Check whether custom macOS type is legible and fits ordinary content and localization.",
+        "exception_to_check": "Is this intentional typography or a native control already handling text?",
+        "source": "https://developer.apple.com/design/human-interface-guidelines/typography",
+    },
+    "type.single-line": {
+        "message": "One-line text can lose meaning with long content or localization.",
+        "exception_to_check": "Is this an intentional compact label with expandable detail or another visible full value?",
+    },
+    "motion.swiftui-animation": {
+        "title": "Custom SwiftUI animation needs purpose and interruption review",
+        "message": "Custom motion should have a purpose and preserve control during interruption or reversal.",
+        "exception_to_check": "Is the motion useful feedback or directly controlled manipulation?",
+        "source": "https://developer.apple.com/design/human-interface-guidelines/motion",
+    },
+    "motion.uikit-animation": {
+        "title": "UIKit animation needs purpose and interruption review",
+        "message": "Custom UIKit motion should provide useful feedback and preserve interruption behavior.",
+        "exception_to_check": "Does the animation preserve control during interruption or reversal?",
+        "source": "https://developer.apple.com/design/human-interface-guidelines/motion",
+    },
+    "motion.appkit-animation": {
+        "title": "AppKit animation needs purpose and interruption review",
+        "message": "Custom AppKit motion should provide useful feedback and preserve interruption behavior.",
+        "exception_to_check": "Does the animation preserve control during interruption or reversal?",
+        "source": "https://developer.apple.com/design/human-interface-guidelines/motion",
+    },
+}
+
+
+def accessibility_groups(requested: Sequence[str]) -> set[str]:
+    if "all" in requested:
+        return set(ACCESSIBILITY_RULE_GROUPS.values())
+    return set(requested)
+
+
+def scoped_rules(requested: Sequence[str]) -> Iterable[Rule]:
+    groups = accessibility_groups(requested)
+    for rule in RULES:
+        ids = tuple(rid for rid in rule.rule_ids
+                    if not rid.startswith("A11Y-") or ACCESSIBILITY_RULE_GROUPS.get(rid) in groups)
+        if not ids:
+            continue
+        overrides = {} if any(rid.startswith("A11Y-") for rid in ids) else UI_SCOPE_OVERRIDES.get(rule.scanner_id, {})
+        yield replace(rule, rule_ids=ids, **overrides)
 
 
 def parse_args(argv: Sequence[str]) -> argparse.Namespace:
@@ -379,6 +447,11 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
         description="Find Swift UI patterns that deserve human Apple HIG review. Results are candidates, not violations."
     )
     parser.add_argument("paths", nargs="+", help="Swift file or directory to scan")
+    parser.add_argument(
+        "--include-accessibility", action="append", default=[],
+        choices=("voiceover", "text", "motion", "vision", "input", "all"),
+        help="Include an explicitly requested accessibility feature; repeatable, default: excluded",
+    )
     parser.add_argument(
         "--platform",
         choices=("all", "ios", "ipados", "macos"),
@@ -455,7 +528,7 @@ def display_path(path: Path) -> str:
         return str(path.resolve())
 
 
-def scan_file(path: Path, platform: str) -> list[Hint]:
+def scan_file(path: Path, platform: str, accessibility: Sequence[str] = ()) -> list[Hint]:
     try:
         text = path.read_text(encoding="utf-8")
     except UnicodeDecodeError:
@@ -464,7 +537,7 @@ def scan_file(path: Path, platform: str) -> list[Hint]:
     hints: list[Hint] = []
     relative = display_path(path)
 
-    for rule in RULES:
+    for rule in scoped_rules(accessibility):
         if not platform_applies(rule, platform):
             continue
         regex = rule.regex
@@ -527,8 +600,9 @@ def sort_hints(hints: Iterable[Hint]) -> list[Hint]:
     )
 
 
-def emit_text(hints: Sequence[Hint], file_count: int, platform: str) -> None:
+def emit_text(hints: Sequence[Hint], file_count: int, platform: str, accessibility: Sequence[str] = ()) -> None:
     print(f"Apple UI HIG candidate scan {VERSION}: {file_count} Swift file(s), platform={platform}")
+    print("Accessibility scope: " + (", ".join(sorted(accessibility_groups(accessibility))) or "excluded"))
     if not hints:
         print("No candidates found. A clean scan is not HIG approval.")
         return
@@ -545,11 +619,12 @@ def emit_text(hints: Sequence[Hint], file_count: int, platform: str) -> None:
     print(f"\n{len(hints)} candidate(s). Confirm context before reporting any finding.")
 
 
-def emit_json(hints: Sequence[Hint], file_count: int, platform: str) -> None:
+def emit_json(hints: Sequence[Hint], file_count: int, platform: str, accessibility: Sequence[str] = ()) -> None:
     payload = {
         "tool": "apple_ui_craft_hints",
         "version": VERSION,
         "platform": platform,
+        "accessibility_features": sorted(accessibility_groups(accessibility)),
         "files_scanned": file_count,
         "candidate_count": len(hints),
         "disclaimer": "Candidates require human context and do not prove HIG violations.",
@@ -563,7 +638,7 @@ def sarif_level(severity: str) -> str:
     return "error" if severity in ("blocker", "major") else "warning" if severity == "minor" else "note"
 
 
-def emit_sarif(hints: Sequence[Hint], file_count: int, platform: str) -> None:
+def emit_sarif(hints: Sequence[Hint], file_count: int, platform: str, accessibility: Sequence[str] = ()) -> None:
     unique_rules: dict[str, Hint] = {}
     for hint in hints:
         unique_rules.setdefault(hint.scanner_id, hint)
@@ -631,6 +706,7 @@ def emit_sarif(hints: Sequence[Hint], file_count: int, platform: str) -> None:
                         "properties": {
                             "filesScanned": file_count,
                             "platform": platform,
+                            "accessibilityFeatures": sorted(accessibility_groups(accessibility)),
                             "candidateOnly": True,
                         },
                     }
@@ -659,18 +735,18 @@ def main(argv: Sequence[str] | None = None) -> int:
     files = list(iter_swift_files(args.paths, args.exclude))
     hints: list[Hint] = []
     for path in files:
-        hints.extend(scan_file(path, args.platform))
+        hints.extend(scan_file(path, args.platform, args.include_accessibility))
         if len(hints) >= args.max_results:
             hints = hints[: args.max_results]
             break
     hints = sort_hints(hints)
 
     if args.format == "json":
-        emit_json(hints, len(files), args.platform)
+        emit_json(hints, len(files), args.platform, args.include_accessibility)
     elif args.format == "sarif":
-        emit_sarif(hints, len(files), args.platform)
+        emit_sarif(hints, len(files), args.platform, args.include_accessibility)
     else:
-        emit_text(hints, len(files), args.platform)
+        emit_text(hints, len(files), args.platform, args.include_accessibility)
 
     return 2 if should_fail(hints, args.fail_on) else 0
 

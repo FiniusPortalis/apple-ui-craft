@@ -1,5 +1,7 @@
 # Self-contained implementation plan template
 
+Use detailed sections only at the requested depth. Follow [accessibility-scope.md](accessibility-scope.md): omit accessibility-only sections, rows, and columns by default; retain ordinary input, layout, and validation details that affect the task. In a formal report, identify the selected scope once rather than listing excluded features as `NOT RUN`.
+
 Use this template only when a persisted plan is required or requested. Keep the plan self-contained; include applicable sections and omit empty or unrelated matrices. Separate independent root causes only when execution or review benefits from separate plans.
 
 ```markdown

@@ -6,6 +6,12 @@ license: MIT
 
 # Apple UI Craft Implementation
 
+## Task scope and response depth
+
+Accessibility-specific work is excluded by default. Include only what the user explicitly requests; a general HIG/UI request does not enable it. Preserve existing accessibility and native behavior, but do not add dedicated implementation, checks, findings, or readiness gates while excluded. Read [accessibility-scope.md](references/accessibility-scope.md) when that boundary needs clarification or accessibility is requested.
+
+Default to a concise, self-contained response covering the result or proposal, essential reasons, and relevant checks or next steps. Use detailed templates only for a requested detailed specification, audit, plan, or handoff. Include material behavior and limits without reproducing every matrix, empty section, or repeated source ledger.
+
 ## One job
 
 Plan and implement authorized native iOS, iPadOS, or macOS UI changes so another engineer can understand the intent, boundaries, sources, code changes, and validation evidence without conversation context. This Skill implements; it does not approve its own work.
@@ -118,7 +124,7 @@ For each material behavior:
 - open the exact Apple HIG topic when web access is available
 - verify API availability against deployment targets
 - state product-specific choices separately
-- turn the request or review finding into observable platform and accessibility acceptance criteria
+- turn the request or review finding into observable in-scope platform criteria; add accessibility criteria only when requested
 - preserve any exception explicitly accepted by the prior review
 
 ### 3. Create the self-contained plan
@@ -131,7 +137,7 @@ A persisted plan includes the applicable items below:
 - commit stamp and current code excerpts with `file:line`
 - exact target behavior/code or API pattern
 - repository conventions and an exemplar
-- platform, state, accessibility, and input matrices
+- relevant platform, state, and ordinary input behavior; accessibility details only when requested
 - ordered edits and dependencies
 - explicit boundaries and prohibited changes
 - mechanical commands and runtime checks
@@ -160,7 +166,7 @@ Minor line movement can be refreshed. Material behavior/architecture drift requi
 - Make iPadOS work at narrow, medium, and wide windows with touch, pointer, and hardware keyboard as relevant.
 - Keep macOS menu, shortcut, window, focus, Settings, and undo behavior complete.
 - Implement loading, failure, cancellation, permission, offline, destructive recovery, and success states included in the plan.
-- Use custom motion/material only for a defined purpose and implement system-setting alternatives.
+- Use custom motion/material only for a defined purpose. Add dedicated accessibility-setting alternatives only when requested.
 - Do not fix nearby review findings unless the plan or authorized handoff includes them.
 
 ### 6. Add or update tests
@@ -192,7 +198,7 @@ Inspect each result. Scanner count reduction is not a success criterion by itsel
 
 ### 8. Run representative runtime checks
 
-Select representative contexts from `references/verification-matrix.md` according to the acceptance criteria and realistic regression risks. Validate the changed primary behavior and affected recovery, layout, text, keyboard/focus, VoiceOver, or system-setting behavior. Do not run unrelated contexts merely to fill a matrix.
+Select representative contexts from `references/verification-matrix.md` according to the acceptance criteria and realistic regression risks. Validate the changed primary behavior and affected recovery, layout, text, and ordinary keyboard/focus. VoiceOver and dedicated accessibility-setting checks require an explicit request. Do not run unrelated contexts merely to fill a matrix.
 
 Capture exact contexts. State required but unavailable checks as `NOT RUN` with their limits. Stop when the selected acceptance checks are satisfied; expand or repeat only for a new failure, material uncertainty, or changed implementation.
 
@@ -204,7 +210,7 @@ Confirm:
 - every plan or handoff step is implemented or explicitly deferred
 - native semantics were not replaced by less-capable custom behavior
 - availability/fallbacks match deployment targets
-- commands, focus, accessibility, localization, and state restoration remain coherent
+- commands, ordinary focus, localization, and state restoration remain coherent; preserve existing accessibility behavior and validate requested accessibility changes
 - tests assert behavior rather than implementation trivia
 - user or pre-existing changes remain distinguishable from implementation-owned changes
 - no source claim exceeds evidence
@@ -215,7 +221,7 @@ This is implementation validation. It is not an independent HIG review.
 
 For a bounded change, report the implemented behavior and files, checks and results, and material limitations in concise prose. Include relevant Apple rationale and evidence links without repeating them in separate tables.
 
-Use `references/implementation-output-template.md` for a complex change, a requested durable report, or an independent review handoff. Omit inapplicable sections and combine repeated evidence. Always preserve implementation/review ownership, actual validation limits, user changes, explicit gates, and the prohibition on self-approval.
+Use `references/implementation-output-template.md` for a requested detailed report or independent review handoff. Omit inapplicable sections and combine repeated evidence. Always preserve implementation/review ownership, actual validation limits, user changes, explicit gates, and the prohibition on self-approval.
 
 A detailed handoff includes the applicable items below:
 
@@ -223,7 +229,7 @@ A detailed handoff includes the applicable items below:
 2. plan/handoff path and finding IDs
 3. implemented files and user-visible behavior
 4. rule/source rationale and exceptions preserved
-5. platform, accessibility, state, and input behavior
+5. relevant platform, state, and input behavior; accessibility only when requested
 6. exact commands/tests and results
 7. runtime contexts actually checked
 8. remaining manual checks, tradeoffs, and plan drift

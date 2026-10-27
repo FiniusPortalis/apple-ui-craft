@@ -1,5 +1,7 @@
 # Design playbook
 
+Apply [accessibility-scope.md](accessibility-scope.md) before selecting criteria. Accessibility-only requirements, examples, settings, and checks below apply only to explicitly requested accessibility work; ordinary UI/input requirements remain in the requested task scope.
+
 Apply gates to features and artifacts in the requested scope. A gate for a feature absent from that scope is inapplicable; do not invent fields, filters, additional platforms, or mock artifacts to satisfy it.
 
 ## Non-negotiable gates
@@ -13,9 +15,9 @@ A design cannot receive `READY` when any applicable gate fails.
 | Data safety | Destructive scope, reversibility, confirmation, and undo are explicit | “Delete” behavior unspecified |
 | Native structure | Platform navigation and command surfaces are selected and justified | Same mockup forced onto iPhone, iPad, and Mac |
 | Adaptation | Minimum, representative, and expanded contexts have defined behavior | “Responsive” with no column-collapse or window strategy |
-| Accessibility | Semantics, text growth, non-color cues, focus, input alternatives, and motion settings are explicit | Accessibility deferred until after implementation |
+| Accessibility (only when requested) | Semantics, text growth, non-color cues, focus, input alternatives, and motion settings are explicit | Accessibility deferred until after implementation |
 | State completeness | Likely loading, empty, failure, permission, offline, and interruption states are defined | Only ideal loaded screenshot exists |
-| Canonical data | Every field keeps a stable ID, cardinality, provenance, validation, editor, and accessibility group across layout variants | A compact mock silently combines two independent fields |
+| Canonical data | Every field keeps a stable ID, cardinality, provenance, validation, and editor across layout variants; specify accessibility grouping only when requested | A compact mock silently combines two independent fields |
 | Query determinism | Every search scope and filter has an exact predicate, example membership, count derivation, ordering, selection, and reset behavior | A named filter exists but required fixture membership is undefined |
 | Artifact consistency | Specifications, mocks, state sheets, and required scenarios agree, with intentional omissions recorded | Wide and compact artifacts imply different field counts |
 | Evidence boundary | Runtime-only properties are assigned to explicit implementation validation instead of being inferred from static artifacts | A mock is treated as proof of VoiceOver, focus order, resizing, contrast, or atomic recovery |
@@ -30,13 +32,13 @@ Use when any of these is unresolved and material:
 
 - primary outcome or object hierarchy is contradictory
 - irreversible/destructive consequences are unknown
-- a core action has no accessible or discoverable path
+- a core action has no discoverable ordinary input path, or lacks a specifically requested assistive path
 - the design loses the primary task at supported window sizes
 - iPadOS resizing/multitasking behavior is absent for an iPad target
 - macOS menu/keyboard/window behavior is absent for a Mac target
 - required state or permission behavior can discard user work
 - the design requires an unverified API with no fallback
-- a canonical field changes cardinality, editor ownership, or accessibility grouping between layout variants without an explicit product decision
+- a canonical field changes cardinality, editor ownership, or explicitly requested accessibility grouping between layout variants without an explicit product decision
 - a required search/filter scenario lacks a deterministic predicate or fixture membership
 - specification, mock, state sheet, and scenario artifacts contradict one another on a material field, state, command, or recovery path
 
@@ -62,10 +64,10 @@ For every editable or reviewable field, record:
 - value type and cardinality
 - source/provenance states, including manual versus suggested values when relevant
 - validation, dirty-state, persistence, and conflict behavior
-- editor ownership and accessible name/value/group
+- editor ownership; accessible name/value/group only when requested
 - representation at minimum, typical, and expanded layouts
 
-Compact layouts may change presentation, not semantics. Scrolling, disclosure, and inspector relocation are valid; combining two independent field IDs into one editor or accessibility group is not.
+Compact layouts may change presentation, not semantics. Scrolling, disclosure, and inspector relocation are valid; combining two independent field IDs into one editor is not. Evaluate assistive grouping only when requested.
 
 ## Deterministic query and filter contract
 
@@ -84,7 +86,7 @@ Walk every required scenario against the contract. A scenario that names a recor
 
 Create a ledger covering the specification, each layout mock, each state sheet, and each required scenario. For every artifact, account for canonical field IDs, state IDs, commands, and expected records. Mark intentional omissions or label abbreviations; otherwise, a contradiction blocks `READY`.
 
-Static artifacts can specify runtime behavior but cannot prove it. Send focus order, VoiceOver output, continuous resizing, measured contrast, motion quality, and recovery atomicity to the validation matrix with an unverified status until exercised.
+Static artifacts can specify runtime behavior but cannot prove it. Put only required in-scope runtime checks in the validation matrix. Include VoiceOver, assistive focus, and accessibility contrast checks only when requested; excluded checks are not evidence gaps.
 
 ## Structure chooser
 
@@ -138,18 +140,18 @@ Rules:
 
 ## Custom-control burden of proof
 
-A custom control specification must answer all of these:
+A custom control specification answers the applicable in-scope questions below:
 
 1. What task cannot a standard control perform?
 2. What are normal, pressed, focused, hovered, selected, disabled, loading, error, and destructive states?
-3. What is the accessible role, name, value, state, and action set?
-4. How does it work with touch, pointer, keyboard, Full Keyboard Access, VoiceOver, and Switch Control where applicable?
+3. When accessibility is requested, what is the accessible role, name, value, state, and action set?
+4. How does it work with touch, pointer, and ordinary keyboard input? Include Full Keyboard Access, VoiceOver, and Switch Control only when requested.
 5. What is its minimum interaction region and spacing behavior?
-6. How does it reflow with larger text and localization?
-7. What happens under Reduce Motion, Increase Contrast, and Reduce Transparency?
+6. How does it reflow with localization and ordinary content growth? Include accessibility text sizes only when requested.
+7. When requested, what happens under Reduce Motion, Increase Contrast, and Reduce Transparency?
 8. How is it tested at supported OS versions?
 
-If these answers are absent, prefer the standard component.
+If required in-scope answers are absent, prefer the standard component. Excluded accessibility answers do not block readiness.
 
 ## Cross-platform reconciliation
 

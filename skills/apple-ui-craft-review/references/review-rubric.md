@@ -1,10 +1,12 @@
 # Review rubric
 
-Select applicable categories and runtime contexts from the declared review scope and mode. Inspect adjacent behavior only where it can explain a finding or realistic regression. A targeted review does not establish whole-application approval. Do not omit relevant accessibility, safety, recovery, or availability checks merely to keep the review short.
+Apply [accessibility-scope.md](accessibility-scope.md) before selecting criteria. Accessibility-only requirements, examples, settings, and checks below apply only to explicitly requested accessibility work; ordinary UI/input requirements remain in the requested task scope.
+
+Select applicable categories and runtime contexts from the declared review scope and mode. Inspect adjacent behavior only where it can explain a finding or realistic regression. A targeted review does not establish whole-application approval. Select accessibility checks only when explicitly requested. Preserve in-scope safety, recovery, and availability checks.
 
 ## Severity
 
-Severity is based on user impact, not visual disagreement or rule count.
+Apply severity only to in-scope findings. Excluded accessibility does not create a finding or limit a scoped verdict. Severity is based on user impact, not visual disagreement or rule count.
 
 | Severity | Definition | Examples |
 | --- | --- | --- |
@@ -32,7 +34,7 @@ A high-confidence `Required` rule failure often becomes Blocker or Major, but ne
 | Recording only | Flow/motion findings and qualified approval for observed scenarios |
 | Code/diff only | Structural/semantic findings and `APPROVE WITH NOTES (code-only)` unless critical runtime behavior is independently tested |
 | Running build without source | Runtime behavior for tested contexts, not API/availability correctness |
-| Code plus representative runtime/accessibility testing | Eligible for unqualified `APPROVE` |
+| Code plus representative runtime testing of the requested scope | Eligible for `APPROVE` within that scope |
 
 ## Platform minimum audit
 
@@ -42,9 +44,9 @@ A high-confidence `Required` rule failure often becomes Blocker or Major, but ne
 - navigation stack/tab behavior and system back/dismiss paths
 - compact-width presentation and popover adaptation
 - orientation and safe-area behavior where supported
-- Dynamic Type, VoiceOver, non-color cues, gesture alternatives
+- Dynamic Type, VoiceOver, non-color cues, assistive gesture alternatives only when requested
 - permission timing, failure, cancellation, and destructive recovery
-- Reduce Motion and material legibility if custom
+- Ordinary material legibility if custom; Reduce Motion only when requested
 
 ### iPadOS
 
@@ -64,7 +66,7 @@ Use the relevant [macOS runtime scenarios](macos-runtime-scenarios.md) for concr
 
 - minimum/typical/large window behavior
 - menu bar completeness and command validation
-- standard shortcuts, Full Keyboard Access, focus order, escape/cancel
+- standard shortcuts, ordinary focus order, escape/cancel; Full Keyboard Access only when requested
 - toolbar as a subset, not the only command surface
 - standard window chrome and multiple windows when supported
 - Settings entry and undo/redo conventions
@@ -89,7 +91,7 @@ Hunt for:
 - raw gesture recognizers on button-shaped elements
 - custom controls without pressed/focus/selected/disabled/progress states
 - destructive role misuse
-- ambiguous symbols without labels or accessibility names
+- ambiguous symbols without a clear visible meaning; assess accessibility names only when requested
 - standard functionality rebuilt with less-capable custom UI
 
 ### 3. Adaptation and layout
@@ -102,7 +104,7 @@ Hunt for:
 - macOS windows that cannot resize usefully
 - text clipping, aggressive shrinking, and localization breakage
 
-### 4. Accessibility and alternate input
+### 4. Accessibility and assistive input (only when requested)
 
 Hunt for:
 
@@ -163,8 +165,8 @@ Hunt for:
 - Liquid Glass in content cards/backgrounds by default
 - many custom glass controls competing with content
 - semantic text replaced by low-contrast appearance colors
-- custom animation with no purpose, origin, interruption, or Reduce Motion path
-- blur transitions under Reduce Motion
+- custom animation with no purpose, origin, or interruption behavior; Reduce Motion paths only when requested
+- blur transitions under Reduce Motion, when that setting is in scope
 
 ### 10. Source and implementation integrity
 
@@ -204,12 +206,12 @@ A finding is ready only if another engineer can answer all of these without aski
 
 ## Aggressive escalation triggers
 
-Treat these as high-priority candidates and verify immediately:
+Treat applicable in-scope items below as high-priority candidates. Verify an accessibility-only item only when that specific feature is requested:
 
 - a core action is available only through gesture, hover, context menu, or pointer
-- a custom button-like view lacks semantic control behavior or an accessible action
-- essential state is conveyed only by color
-- supported Dynamic Type or localization removes an essential action or meaning
+- a custom button-like view lacks ordinary native control behavior; assess assistive actions only when that feature is requested
+- when non-color accessibility is requested, essential state is conveyed only by color
+- localization removes an essential action or meaning; assess Dynamic Type only when that feature is requested
 - hard-coded device bounds break iPad window resizing or macOS windows
 - an iPad app is functionally a fixed phone canvas and loses core content when resized
 - a macOS command exists only in a toolbar with no menu or keyboard path where expected
@@ -217,7 +219,7 @@ Treat these as high-priority candidates and verify immediately:
 - a routine recoverable action is blocked by repeated confirmation alerts
 - loading or failure silently discards input or leaves an indefinite spinner
 - Liquid Glass is used throughout the content layer or obscures legibility
-- custom spatial/blur motion ignores Reduce Motion
+- when Reduce Motion is requested, custom spatial/blur motion ignores it
 - a new API exceeds the deployment target without fallback
 - a screenshot is being used to claim unmeasured accessibility, hit-target, contrast, or focus behavior
 

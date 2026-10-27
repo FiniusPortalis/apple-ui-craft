@@ -10,7 +10,7 @@ Open only the topics relevant to the task. The live pages override this index.
 | --- | --- | --- |
 | Human Interface Guidelines | https://developer.apple.com/design/human-interface-guidelines/ | Topic discovery only; do not use as the sole source for a specific finding |
 | Design principles | https://developer.apple.com/design/human-interface-guidelines/design-principles | Purpose, agency, responsibility, familiarity, flexibility, simplicity, craft, delight |
-| Accessibility | https://developer.apple.com/design/human-interface-guidelines/accessibility | Dynamic Type, custom text sizes, control sizes, non-color cues, gesture alternatives, keyboard access, Reduce Motion |
+| Accessibility (only when requested) | https://developer.apple.com/design/human-interface-guidelines/accessibility | Dynamic Type, custom text sizes, control sizes, non-color cues, gesture alternatives, keyboard access, Reduce Motion |
 | Layout | https://developer.apple.com/design/human-interface-guidelines/layout | Safe areas, container adaptation, orientation, iPad window resizing, macOS layout considerations |
 | Typography | https://developer.apple.com/design/human-interface-guidelines/typography | System text styles, legibility, hierarchy, Dynamic Type |
 | Color | https://developer.apple.com/design/human-interface-guidelines/color | Semantic color, contrast, Dark Mode, color-independent meaning |
@@ -64,8 +64,8 @@ Use official framework documentation to verify API names, deployment availabilit
 - SwiftUI: https://developer.apple.com/documentation/swiftui
 - UIKit: https://developer.apple.com/documentation/uikit
 - AppKit: https://developer.apple.com/documentation/appkit
-- Accessibility: https://developer.apple.com/documentation/accessibility
-- Accessibility Inspector: https://developer.apple.com/documentation/accessibility/accessibility-inspector
+- Accessibility (only when requested): https://developer.apple.com/documentation/accessibility
+- Accessibility Inspector (only when requested): https://developer.apple.com/documentation/accessibility/accessibility-inspector
 - XCTest: https://developer.apple.com/documentation/xctest
 
 Do not assume an API exists merely because it sounds plausible. Verify its declaration and availability against the repository's deployment targets.
@@ -74,7 +74,7 @@ Do not assume an API exists merely because it sounds plausible. Verify its decla
 
 | Topic | URL | Use |
 | --- | --- | --- |
-| VoiceOver | https://developer.apple.com/design/human-interface-guidelines/voiceover | Descriptions, grouping, reading order, content changes |
+| VoiceOver (only when requested) | https://developer.apple.com/design/human-interface-guidelines/voiceover | Descriptions, grouping, reading order, content changes |
 | Progress indicators | https://developer.apple.com/design/human-interface-guidelines/progress-indicators | Determinate progress, cancellation, consequences |
 | Privacy | https://developer.apple.com/design/human-interface-guidelines/privacy | Contextual permission requests |
 | The menu bar | https://developer.apple.com/design/human-interface-guidelines/the-menu-bar | Standard menu structure and app Settings |

@@ -1,5 +1,7 @@
 # Implementation playbook
 
+Apply [accessibility-scope.md](accessibility-scope.md) before selecting criteria. Accessibility-only requirements, examples, settings, and checks below apply only to explicitly requested accessibility work; ordinary UI/input requirements remain in the requested task scope.
+
 Apply checks only to platform behaviors changed by the implementation or exposed to a realistic regression risk. This is a selection checklist, not an instruction to retest unrelated application features.
 
 ## Framework mapping
@@ -71,7 +73,7 @@ For every long or fallible operation, define:
 
 Avoid a single Boolean such as `isLoading` when the operation has distinct idle, running, success, failed, cancelled, or partial states that affect behavior.
 
-## Accessibility implementation
+## Accessibility implementation (only when requested)
 
 ### Native semantics first
 
@@ -87,7 +89,7 @@ Avoid a single Boolean such as `isLoading` when the operation has distinct idle,
 - Preserve focus when content updates; move focus only when the task requires it and the change is predictable.
 - Make custom actions available when visual gestures have no direct assistive equivalent.
 
-### Keyboard and focus
+## Ordinary keyboard and focus
 
 - iPadOS/macOS core commands need focusable controls or command/menu paths.
 - Do not override standard shortcuts.
@@ -99,7 +101,7 @@ Avoid a single Boolean such as `isLoading` when the operation has distinct idle,
 - Let standard navigation and controls adopt current system material behavior.
 - Use official APIs and semantic styles rather than layered opacity/blur replicas.
 - Keep content layer distinct from the functional control/navigation layer.
-- Test on varied content backgrounds and with Reduce Transparency/Increase Contrast.
+- Test ordinary legibility on relevant content backgrounds. Test Reduce Transparency/Increase Contrast only when requested.
 - Do not globally add glass to “modernize” an app.
 
 ## Motion implementation
@@ -107,7 +109,7 @@ Avoid a single Boolean such as `isLoading` when the operation has distinct idle,
 - Name the purpose: continuity, direct manipulation, state, feedback, or explanation.
 - Start from current presentation state when interruption is possible.
 - Track direct gestures continuously and preserve cancellation/reversal.
-- Add a Reduce Motion branch for spatial/depth/blur motion.
+- Add a Reduce Motion branch for spatial/depth/blur motion only when requested.
 - Reuse repository motion tokens; if none exist, keep local values explicit and label them implementation choices, not HIG values.
 - Test on device or a representative simulator when feel matters.
 
@@ -147,6 +149,6 @@ Before expanding scope, ask:
 - Can layout become container-relative without rewriting navigation?
 - Can a menu/command addition preserve the toolbar?
 - Can an inline status replace a blocking alert?
-- Can one Reduce Motion branch cover the custom transition?
+- When Reduce Motion is requested, can one branch cover the custom transition?
 
 Prefer the smallest change that fully fixes behavior, not the smallest diff that leaves the root cause.

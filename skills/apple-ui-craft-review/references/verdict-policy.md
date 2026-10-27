@@ -4,6 +4,10 @@ Use one HIG verdict only when `Review integrity` is `PASS`. Add an evidence qual
 
 If review integrity is `INVALIDATED`, do not issue a HIG verdict. `INVALIDATED` is an operational state, not a fifth verdict.
 
+## Verdict scope
+
+Apply [accessibility-scope.md](accessibility-scope.md) before evaluating severity or evidence. Excluded accessibility is not a Blocker, Major, missing check, or reason to downgrade. A formal verdict identifies the reviewed scope once, for example `APPROVE (reviewed scope; accessibility excluded)`. `APPROVE` is not full HIG or whole-release approval. Only explicitly requested accessibility features enter its requirements.
+
 ## BLOCK
 
 Use when at least one confirmed `Blocker` exists.
@@ -12,7 +16,7 @@ Typical conditions:
 
 - critical task cannot complete in a declared supported context
 - credible data-loss, privacy, or safety risk
-- essential core workflow unavailable to an assistive or expected input path
+- essential core workflow unavailable to an expected ordinary input path, or a specifically requested assistive path
 - navigation or modal state traps people or discards work
 - deployment/API mismatch prevents correct execution
 
@@ -49,7 +53,7 @@ APPROVE WITH NOTES (visual-only)
 ```
 
 ```text
-APPROVE WITH NOTES (code-only; runtime accessibility not verified)
+APPROVE WITH NOTES (code-only; requested runtime checks not performed)
 ```
 
 Do not phrase this as full release approval.
@@ -63,11 +67,11 @@ Use only when all are true:
 - no actionable Blocker or Major remains
 - material Minor findings are resolved or explicitly accepted with rationale
 - code and representative runtime behavior were inspected
-- critical path, failure/recovery, window/orientation adaptation, and relevant accessibility/input settings were exercised
+- critical path and relevant failure/recovery, adaptation, and ordinary input were exercised; accessibility settings were exercised only for explicitly requested features
 - official-source and deployment-target questions are resolved
 - the validation matrix records exact contexts and outcomes
 
-An empty scanner report is not sufficient.
+An empty scanner report is not sufficient. Do not add excluded dimensions to the validation matrix.
 
 ## Review-limited handling
 

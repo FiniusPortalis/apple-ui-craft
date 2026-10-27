@@ -6,7 +6,8 @@ Three Codex skills for designing, reviewing, and implementing native **macOS, iO
 
 - **Traceable guidance:** 68 rules linked to specific sections across 31 Apple HIG topics.
 - **Clear reasoning:** distinguishes Apple guidance, API behavior, platform conventions, and product decisions.
-- **Practical coverage:** navigation, resizing, keyboard access, accessibility, loading, errors, and recovery.
+- **Scoped coverage:** navigation, resizing, ordinary keyboard access, loading, errors, and recovery; accessibility-specific work only when explicitly requested.
+- **Concise by default:** report the result, essential reasons, and relevant checks; detailed matrices are for requested specifications, audits, and handoffs.
 - **Actionable reviews:** findings include location, impact, proposed changes, and verification steps.
 
 ## Choose a skill
@@ -76,6 +77,14 @@ Report issues by severity, cite Apple sources, and give verification steps. Do n
 Use $apple-ui-craft-implementation to apply the agreed UI changes.
 Preserve existing work, check OS availability, and run relevant tests and runtime checks.
 ```
+
+## Accessibility scope
+
+Accessibility-specific design, implementation, auditing, and testing are excluded by default, including for a general HIG review. Existing accessibility, native control behavior, and UI test identifiers are preserved. Ordinary readability, resizing, menus, and keyboard behavior remain in scope when relevant. This is a work-scope choice; Apple continues to recommend accessibility. See the [scope policy](skills/apple-ui-craft-design/references/accessibility-scope.md).
+
+To include a feature, request it explicitly, for example: “Review VoiceOver labels and reading order for this result list.” This does not enable unrelated accessibility checks. Scope-limited verdicts do not certify full HIG, accessibility, or release readiness.
+
+The optional candidate scanner also excludes accessibility rules by default. Add `--include-accessibility voiceover` for that feature, or `--include-accessibility all` for an explicitly requested comprehensive accessibility scan. The option is repeatable for `voiceover`, `text`, `motion`, `vision`, and `input`.
 
 ## Usage notes
 

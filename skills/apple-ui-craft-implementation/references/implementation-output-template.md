@@ -1,6 +1,8 @@
 # Implementation output template
 
-For a bounded change, report the implemented behavior and files, checks and results, and material limitations in concise prose. Use the full template for a complex change, a requested durable report, or an independent review handoff. Omit inapplicable sections and combine repeated evidence. Always preserve implementation/review ownership, actual validation limits, user changes, explicit gates, and the prohibition on self-approval.
+Use detailed sections only at the requested depth. Follow [accessibility-scope.md](accessibility-scope.md): omit accessibility-only sections, rows, and columns by default; retain ordinary input, layout, and validation details that affect the task. In a formal report, identify the selected scope once rather than listing excluded features as `NOT RUN`.
+
+For a bounded change, report the implemented behavior and files, checks and results, and material limitations in concise prose. Use the full template for a requested detailed report or independent review handoff. Omit inapplicable sections and combine repeated evidence. Always preserve implementation/review ownership, actual validation limits, user changes, explicit gates, and the prohibition on self-approval.
 
 Implementation output reports change status and validation evidence. It never returns the implementer's own review verdict. In a combined request this output goes to the coordinator for any remaining independent review and the overall completion report.
 

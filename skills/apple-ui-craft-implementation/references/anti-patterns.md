@@ -1,5 +1,7 @@
 # Native anti-pattern catalog
 
+Apply [accessibility-scope.md](accessibility-scope.md) before selecting criteria. Accessibility-only requirements, examples, settings, and checks below apply only to explicitly requested accessibility work; ordinary UI/input requirements remain in the requested task scope.
+
 Use these examples as diagnostic patterns, not blind search-and-replace recipes. Confirm repository context, deployment targets, and the documented exceptions before reporting or changing code.
 
 ## Summary table
@@ -19,7 +21,7 @@ Use these examples as diagnostic patterns, not blind search-and-replace recipes.
 | Known progress shown only as spinner | `ProgressView()` for a large local import with known item count | determinate progress, context label, cancel/pause when safe | Better expectation and agency | Very short operations may not need a percentage |
 | Custom glass across content | every card/background uses `.glassEffect()` or custom blur | reserve glass for functional navigation/controls; standard content material/background | Preserves hierarchy and legibility | A transient active control in content can adopt glass |
 | Appearance-selected material | choose blur because it looks “blue enough” | select semantic material; use semantic colors/vibrancy | Material appearance changes with settings and background | Static artwork is content, not material |
-| Unconditional spatial animation | always slide/zoom/blur on state change | branch for Reduce Motion; use fade/highlight/nonspatial alternative | Reduces vestibular load and respects system settings | Gesture-tracked motion can remain when direct and controlled |
+| Unconditional spatial animation (when Reduce Motion is requested) | always slide/zoom/blur on state change | branch for Reduce Motion; use fade/highlight/nonspatial alternative | Reduces vestibular load and respects system settings | Gesture-tracked motion can remain when direct and controlled |
 | iPad as enlarged phone | fixed narrow `VStack` centered in wide window | responsive columns, split view, adaptable tab/sidebar, or intentional reading width with useful surrounding UI | Uses space and survives resizing | Reading content can retain a comfortable measure; navigation and tools should still use the window well |
 | Duplicate toolbar overflow | a custom More menu duplicates actions already exposed by framework overflow | verify actual framework behavior; prioritize items and provide additional actions only where needed | HIG supports a More menu when needed; automatic overflow depends on the API and OS | A single purposeful More menu is valid, including for limited width |
 | iPad search steals focus | dedicated search field auto-focuses on appearance | keep focus neutral when software keyboard would cover content; focus when typing is clearly next or hardware keyboard is present | Prevents unexpected obstruction | Search-only launch experiences can autofocus intentionally |
@@ -27,7 +29,7 @@ Use these examples as diagnostic patterns, not blind search-and-replace recipes.
 | macOS Settings via toolbar gear only | toolbar gear opens preferences | provide app-menu Settings and Command-comma; toolbar entry optional | Matches platform convention and keyboard access | A per-document inspector is not app Settings |
 | Borderless custom window by default | replace title bar and traffic-light behavior to match mockup | retain standard window chrome and customize only supported areas | Preserves resizing, movement, focus, accessibility, and expectations | Utility panels/HUDs can use special styles with explicit behavior testing |
 | Compact popover | force a popover in narrow iPhone width | use adaptive sheet/full-screen presentation | Popovers need source context and sufficient space | System adaptation may already handle this; do not wrap it twice |
-| Hidden failure | operation fails and spinner simply disappears | inline error, retry/recovery, accessible announcement, retained user input | Feedback must explain state and recovery | Silent background refresh may fail quietly if stale content remains clearly usable and no user action was promised |
+| Hidden failure | operation fails and spinner simply disappears | inline error, retry/recovery, retained user input; assistive announcement only when requested | Feedback must explain state and recovery | Silent background refresh may fail quietly if stale content remains clearly usable and no user action was promised |
 
 ## SwiftUI examples
 
@@ -132,10 +134,9 @@ Label(
     isConnected ? "Connected" : "Disconnected",
     systemImage: isConnected ? "checkmark.circle.fill" : "exclamationmark.triangle.fill"
 )
-.accessibilityValue(isConnected ? "Connected" : "Disconnected")
 ```
 
-### 5. Reduce Motion branch
+### 5. Reduce Motion branch (only when requested)
 
 Before:
 
@@ -222,7 +223,6 @@ After:
 ```swift
 let button = UIButton(type: .system)
 button.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
-button.accessibilityLabel = "Share"
 button.addTarget(self, action: #selector(share), for: .primaryActionTriggered)
 ```
 

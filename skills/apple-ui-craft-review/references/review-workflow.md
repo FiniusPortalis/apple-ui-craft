@@ -22,7 +22,7 @@ State what the artifact can and cannot prove using `source-policy.md`. A screens
 
 ### 1. Recon before judgment
 
-Select applicable categories and runtime contexts from the declared review scope and mode. Inspect adjacent behavior only where it can explain a finding or realistic regression. A targeted review does not establish whole-application approval. Do not omit relevant accessibility, safety, recovery, or availability checks merely to keep the review short.
+Select applicable categories and runtime contexts from the declared review scope and mode. Inspect adjacent behavior only where it can explain a finding or realistic regression. A targeted review does not establish whole-application approval. Select accessibility checks only when explicitly requested. Preserve in-scope safety, recovery, and availability checks.
 
 For code or a PR:
 
@@ -39,7 +39,7 @@ For screenshots or recordings:
 
 For a running build:
 
-- exercise the main path, interruption, recovery, resize/orientation, text growth, and relevant accessibility/input settings
+- exercise the main path and affected recovery, resizing, localization, and ordinary input; exercise accessibility settings only when requested
 - record exact context and observed result
 - keep runtime/build outputs outside the repository or downgrade the evidence qualifier
 
@@ -57,20 +57,20 @@ Classify each candidate as:
 
 ### 3. Select applicable review areas
 
-Select applicable categories and runtime contexts from the declared review scope and mode. Inspect adjacent behavior only where it can explain a finding or realistic regression. A targeted review does not establish whole-application approval. Do not omit relevant accessibility, safety, recovery, or availability checks merely to keep the review short.
+Select applicable categories and runtime contexts from the declared review scope and mode. Inspect adjacent behavior only where it can explain a finding or realistic regression. A targeted review does not establish whole-application approval. Select accessibility checks only when explicitly requested. Preserve in-scope safety, recovery, and availability checks.
 
 1. primary task and hierarchy
 2. native controls, roles, and interaction states
 3. adaptive layout and supported window/orientation contexts
-4. accessibility semantics, text growth, non-color cues, and alternate input
+4. ordinary input and text legibility; accessibility semantics, assistive input, and accessibility text growth only when requested
 5. destructive action, cancellation, undo, and data preservation
 6. loading, empty, error, offline, permission, and feedback behavior
 7. platform navigation, window, menu, toolbar, shortcut, and focus behavior
 8. search, sidebar, split-view, popover, sheet, alert, and context-menu usage
-9. material, contrast, custom motion, and Reduce Motion
+9. material legibility and custom motion; accessibility contrast settings and Reduce Motion only when requested
 10. source accuracy, deployment availability, and evidence honesty
 
-Use the platform minimums in `review-rubric.md`. Do not spend time on polish while a critical path or accessibility barrier remains.
+Use the platform minimums in `review-rubric.md`. Prioritize an in-scope critical path over polish; include assistive-technology barriers only when accessibility is requested.
 
 ### 4. Use static hints only as candidates
 
@@ -115,7 +115,7 @@ Use the escalation triggers and severity rules in `review-rubric.md`.
 Prefer remediation in this order:
 
 1. restore task completion, safety, and data recovery
-2. restore native semantics and accessible input
+2. restore native controls and ordinary input; assistive input only when requested
 3. fix navigation, windowing, resizing, and platform command structure
 4. complete state, status, and recovery behavior
 5. remove unnecessary custom controls, glass, motion, and modality

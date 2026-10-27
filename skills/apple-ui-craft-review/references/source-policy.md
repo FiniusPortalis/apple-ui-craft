@@ -6,6 +6,10 @@
 
 This package is intentionally stricter about evidence than about visual taste. A recommendation is only as strong as its source and the artifact that was inspected.
 
+## Scope before source selection
+
+Select the user-authorized task scope first, using [accessibility-scope.md](accessibility-scope.md). The authority order below resolves the meaning of an in-scope source claim; it does not expand the assignment or activate excluded accessibility work.
+
 ## Authority order
 
 Use sources in this order:
@@ -20,7 +24,7 @@ When live guidance conflicts with a bundled summary, the live Apple source wins.
 
 ## Claim classes
 
-Every substantive design decision or review finding must use one of these classes.
+Classify material source-backed decisions and findings using these classes. In a concise reply, cite the supporting source alongside the claim; a separate classification table or ledger is not required.
 
 | Class | Meaning | Permitted wording |
 | --- | --- | --- |
@@ -53,7 +57,7 @@ A static artifact can receive a visual verdict, but not a full accessibility or 
 
 ## Citation format inside outputs
 
-For each important decision or finding, include:
+For detailed specifications or formal handoffs, include the following for each important decision or finding. In concise replies, keep only the source and material qualification needed to support the claim:
 
 - rule ID from `native-rule-catalog.md`
 - claim class

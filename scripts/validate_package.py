@@ -21,7 +21,7 @@ SKILLS = ("apple-ui-craft-design", "apple-ui-craft-review", "apple-ui-craft-impl
 SHARED_REFERENCES = (
     "native-rule-catalog.md", "source-policy.md", "apple-hig-sources.md",
     "source-verification.md", "platform-profiles.md", "anti-patterns.md",
-    "macos-runtime-scenarios.md",
+    "macos-runtime-scenarios.md", "accessibility-scope.md",
 )
 RULE_ROW = re.compile(r"^\s*\|?\s*`?([A-Z][A-Z0-9]*-\d+)`?\s*\|")
 LINK = re.compile(r"\[[^\]\n]+\]\(([^\s)]+)\)")
